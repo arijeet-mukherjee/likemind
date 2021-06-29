@@ -7,6 +7,9 @@ import 'package:answer_me/models/Message.dart';
 import 'package:answer_me/models/User.dart';
 import 'package:answer_me/providers/ConversationProvider.dart';
 import 'package:answer_me/providers/ThemeProvider.dart';
+import 'package:answer_me/screens/Tabs.dart';
+import 'package:answer_me/screens/other/QuestionDetail.dart';
+import 'package:answer_me/screens/tabs/HomeScreen.dart';
 import 'package:answer_me/widgets/ExpandableText.dart';
 import 'package:answer_me/widgets/TagsTextField.dart';
 import 'package:image_picker/image_picker.dart';
@@ -490,9 +493,18 @@ class _AskQuestionScreenState extends State<AskQuestionScreen> {
   _sendReply() async {
     if (_formKey.currentState.validate()) {
       //AuthProvider _auth = Provider.of<AuthProvider>(context, listen: false);
-      if (_authProvider.user.id != widget.authorId) {
-        _openChatScreen(context);
+      if (_authProvider.user.id == widget.authorId) {
+        //_openChatScreen(context);
+        ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      content: Text("You cant reply your question!"),
+         ));
+        Navigator.push(
+        context,
+        MaterialPageRoute(builder: (ctx) => TabsScreen()),
+      );
       }
+      else{
+        _openChatScreen(context);
       showLoadingDialog(context, 'Posting reply...');
 
       String answer = _answerController.text;
@@ -516,6 +528,8 @@ class _AskQuestionScreenState extends State<AskQuestionScreen> {
         context,
         MaterialPageRoute(builder: (ctx) => ConversationsScreen()),
       );
+
+    }
     }
   }
 
