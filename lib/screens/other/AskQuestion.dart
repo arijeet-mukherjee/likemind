@@ -496,40 +496,38 @@ class _AskQuestionScreenState extends State<AskQuestionScreen> {
       if (_authProvider.user.id == widget.authorId) {
         //_openChatScreen(context);
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
-      content: Text("You cant reply your question!"),
-         ));
+          content: Text("You cant reply your question!"),
+        ));
         Navigator.push(
-        context,
-        MaterialPageRoute(builder: (ctx) => TabsScreen()),
-      );
-      }
-      else{
+          context,
+          MaterialPageRoute(builder: (ctx) => TabsScreen()),
+        );
+      } else {
         _openChatScreen(context);
-      showLoadingDialog(context, 'Posting reply...');
+        showLoadingDialog(context, 'Posting reply...');
 
-      String answer = _answerController.text;
+        String answer = _answerController.text;
 
-      Comment _comment = new Comment();
-      _comment.authorId = _authProvider.user.id;
-      _comment.anonymous = isAnonymous ? 1 : 0;
-      _comment.answerId = widget.answerId;
-      _comment.questionId = widget.questionId;
-      _comment.content = answer;
-      _comment.type = widget.reply ? 'Reply' : 'Answer';
+        Comment _comment = new Comment();
+        _comment.authorId = _authProvider.user.id;
+        _comment.anonymous = isAnonymous ? 1 : 0;
+        _comment.answerId = widget.answerId;
+        _comment.questionId = widget.questionId;
+        _comment.content = answer;
+        _comment.type = widget.reply ? 'Reply' : 'Answer';
 
-      await ApiRepository.addComment(
-        context,
-        _comment,
-      ).then((value) => Navigator.pop(context));
-      await widget.getQuestion();
+        await ApiRepository.addComment(
+          context,
+          _comment,
+        ).then((value) => Navigator.pop(context));
+        await widget.getQuestion();
 
-      Navigator.pop(context);
-      Navigator.push(
-        context,
-        MaterialPageRoute(builder: (ctx) => ConversationsScreen()),
-      );
-
-    }
+        Navigator.pop(context);
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (ctx) => ConversationsScreen()),
+        );
+      }
     }
   }
 
@@ -539,6 +537,7 @@ class _AskQuestionScreenState extends State<AskQuestionScreen> {
 
   _openChatScreen(BuildContext context) async {
     AuthProvider _auth = Provider.of<AuthProvider>(context, listen: false);
+    _getQuestion();
     ConversationProvider _convProvider =
         Provider.of<ConversationProvider>(context, listen: false);
     if (_convProvider.concersations.isNotEmpty) {
@@ -564,10 +563,18 @@ class _AskQuestionScreenState extends State<AskQuestionScreen> {
             messages: exist.messages,
             id: exist.id,
           );
+
           Message message = new Message();
           message.conversationId = conversation.id;
           message.userId = _auth.user.id;
-          message.body = _answerController.text;
+          String c = ':';
+          
+          String body = 'Q. '+' '+ _question.content +
+              '\n' +
+               
+              '\n' +
+              'Ans. '+' '+_answerController.text;
+          message.body = body;
           print("Time of conv : " + conversation.createdAt.toString());
           print("Message From Ask :" + message.toJson().toString());
           await Provider.of<ConversationProvider>(context, listen: false)
@@ -576,9 +583,14 @@ class _AskQuestionScreenState extends State<AskQuestionScreen> {
       } else {
         Message message = new Message();
         Conversation conversation = new Conversation();
+        String body = 'Q. '+' '+ _question.content +
+              '\n' +
+               
+              '\n' +
+              'Ans. '+' '+_answerController.text;
         //message.conversationId = conversation.id;
         message.userId = _auth.user.id;
-        message.body = _answerController.text;
+        message.body = body;
         if (conversation.id == null) {
           await Provider.of<ConversationProvider>(context, listen: false)
               .createConversation(
@@ -697,7 +709,7 @@ class _AskQuestionScreenState extends State<AskQuestionScreen> {
     );
   }
 
-  _buildDescription(BuildContext context){
+  _buildDescription(BuildContext context) {
     ThemeProvider theme = Provider.of<ThemeProvider>(context, listen: false);
     _getQuestion();
     if (_question.content.isNotEmpty)
@@ -780,8 +792,8 @@ class _AskQuestionScreenState extends State<AskQuestionScreen> {
                 if (widget.answer) {
                   return Column(
                     children: [
-                     // _buildQuestionTitle(context),
-                      
+                      // _buildQuestionTitle(context),
+
                       Container(
                         width: double.infinity,
                         child: Form(
@@ -794,7 +806,6 @@ class _AskQuestionScreenState extends State<AskQuestionScreen> {
                                 title: '',
                                 body: Column(
                                   children: [
-                                    
                                     CustomTextField(
                                       hint: 'What do you think?',
                                       maxLines: 8,

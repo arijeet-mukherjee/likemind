@@ -266,8 +266,17 @@ class _QuestionDetailItemState extends State<QuestionDetailItem> {
           //_buildFeaturedImage(),
          // _buildTags(context),
           _buildViewsText(context, theme),
+          (_authProvider.user != null && widget.question != null) &&
+                _authProvider.user.id == widget.question.authorId
+            ?Container():
           Divider(thickness: 1, color: Theme.of(context).dividerColor),
+          (_authProvider.user != null && widget.question != null) &&
+                _authProvider.user.id == widget.question.authorId
+            ?Container():
           SizedBox(height: SizeConfig.blockSizeVertical * 0.2),
+          (_authProvider.user != null && widget.question != null) &&
+                _authProvider.user.id == widget.question.authorId
+            ?Container():
           _buildActionsRow(context, theme),
         ],
       ),
