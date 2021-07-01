@@ -433,7 +433,7 @@ class _QuestionListItemState extends State<QuestionListItem> {
             trimLines: 5,
             style: TextStyle(
               fontSize: SizeConfig.safeBlockHorizontal * 4.1,
-              fontWeight: FontWeight.w600,
+              fontWeight: FontWeight.w400,
               color: theme.isDarkTheme()
                   ? Colors.white.withOpacity(0.8)
                   : Colors.black87,
