@@ -44,7 +44,8 @@ class ConversationCard extends StatelessWidget {
               color: _theme.isDarkTheme() ? Colors.white70 : Colors.black54,
               fontSize: SizeConfig.safeBlockHorizontal * 3.5,
             ),
-          )
+          ),
+          
         ],
       ),
       subtitle: Text(
