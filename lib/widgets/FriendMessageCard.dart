@@ -30,7 +30,7 @@ class FriendMessageCard extends StatelessWidget {
                 topRight: Radius.circular(23),
                 bottomRight: Radius.circular(23)),
             gradient: LinearGradient(
-              colors: [const Color(0x2B000000), const Color(0x3A000000)],
+              colors: [const Color(0xFF000000), const Color(0xFF000000)],
             )),
         child: Text(
           message.body,

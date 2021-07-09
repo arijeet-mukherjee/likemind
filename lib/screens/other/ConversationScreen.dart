@@ -1,5 +1,7 @@
 import 'package:answer_me/config/SizeConfig.dart';
 import 'package:answer_me/providers/ConversationProvider.dart';
+import 'package:answer_me/providers/ThemeProvider.dart';
+import 'package:answer_me/screens/Tabs.dart';
 import 'package:answer_me/widgets/AppBarLeadingButton.dart';
 import 'package:answer_me/widgets/ConversationCard.dart';
 import 'package:flutter/material.dart';
@@ -38,13 +40,22 @@ class _ConversationsScreenState extends State<ConversationsScreen> {
   }
 
   _appBar() {
+    ThemeProvider theme = Provider.of<ThemeProvider>(context, listen: false);
     return AppBar(
       title: Text(
         'Messages',
         style: Theme.of(context).textTheme.headline6,
       ),
       centerTitle: true,
-      leading: AppBarLeadingButton(),
+      leading: IconButton(
+        icon: Icon(Icons.chevron_left,
+            color: theme.isDarkTheme() ? Colors.white : Colors.black, size: 33),
+        onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (ctx) => TabsScreen()),
+                    ),
+      ),
     );
   }
 

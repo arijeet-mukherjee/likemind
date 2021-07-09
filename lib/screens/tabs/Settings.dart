@@ -316,12 +316,12 @@ class _SettingsScreenState extends State<SettingsScreen> {
             auth.user == null || auth.user.username == null
                 ? Container()
                 : SettingsListItem(
-                    text: 'Messages',
+                    text: 'My Profile',
                     arrow: true,
                     onTap: () => Navigator.push(
                       context,
                       MaterialPageRoute(
-                          builder: (ctx) => ConversationsScreen()),
+                          builder: (ctx) => UserProfile(authorId:auth.user.id)),
                     ),
                   ),
             SettingsListItem(

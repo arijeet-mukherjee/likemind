@@ -292,12 +292,16 @@ class _AskQuestionScreenState extends State<AskQuestionScreen> {
     });
   }
 
+  //Add String caps
+
   _addQuestion() async {
     if (_formKey.currentState.validate()) {
       showLoadingDialog(context, 'Asking Question...');
 
-      String title = _titleController.text;
-      String details = _detailsController.text;
+      String title1 = _titleController.text;
+      String title = title1[0].toUpperCase() + title1.substring(1);
+      String details1 = _detailsController.text;
+      String details = details1[0].toUpperCase() + details1.substring(1);
       String videoURL = _videoURLController.text;
 
       if (widget.askAuthor) {
@@ -568,12 +572,15 @@ class _AskQuestionScreenState extends State<AskQuestionScreen> {
           message.conversationId = conversation.id;
           message.userId = _auth.user.id;
           String c = ':';
-          
-          String body = 'Q. '+' '+ _question.content +
+
+          String body = 'Q. ' +
+              ' ' +
+              _question.content +
               '\n' +
-               
               '\n' +
-              'Ans. '+' '+_answerController.text;
+              'Ans. ' +
+              ' ' +
+              _answerController.text;
           message.body = body;
           print("Time of conv : " + conversation.createdAt.toString());
           print("Message From Ask :" + message.toJson().toString());
@@ -583,11 +590,14 @@ class _AskQuestionScreenState extends State<AskQuestionScreen> {
       } else {
         Message message = new Message();
         Conversation conversation = new Conversation();
-        String body = 'Q. '+' '+ _question.content +
-              '\n' +
-               
-              '\n' +
-              'Ans. '+' '+_answerController.text;
+        String body = 'Q. ' +
+            ' ' +
+            _question.content +
+            '\n' +
+            '\n' +
+            'Ans. ' +
+            ' ' +
+            _answerController.text;
         //message.conversationId = conversation.id;
         message.userId = _auth.user.id;
         message.body = body;
