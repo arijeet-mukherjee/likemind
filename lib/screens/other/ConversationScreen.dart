@@ -6,7 +6,7 @@ import 'package:answer_me/widgets/AppBarLeadingButton.dart';
 import 'package:answer_me/widgets/ConversationCard.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-
+import 'package:timeago/timeago.dart' as timeago;
 import 'ChatScreen.dart';
 
 class ConversationsScreen extends StatefulWidget {
@@ -75,29 +75,36 @@ class _ConversationsScreenState extends State<ConversationsScreen> {
                         //   actionPane: SlidableDrawerActionPane(),
                         //   actionExtentRatio: 0.25,
                         // child:
-                        ConversationCard(
-                      conversation: convProvider.concersations[index],
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (_) => ChatScreen(
-                              conversation: convProvider.concersations[index],
+                      Ink(
+                      color:
+                          '${timeago.format(convProvider.concersations[index].messages.last.createdAt)}' ==
+                                  'a moment ago'
+                              ? Colors.green
+                              : Colors.transparent,
+                      child: ConversationCard(
+                        conversation: convProvider.concersations[index],
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) => ChatScreen(
+                                conversation: convProvider.concersations[index],
+                              ),
                             ),
-                          ),
-                        );
-                      },
-                      // ),
-                      // secondaryActions: <Widget>[
-                      //   IconSlideAction(
-                      //     caption: 'Delete',
-                      //     color: Theme.of(context).scaffoldBackgroundColor,
-                      //     icon: Icons.delete,
-                      //     foregroundColor: Theme.of(context).primaryColor,
-                      //     onTap: () => _deleteConversation(
-                      //       convProvider.concersations[index].id,
-                      //     ),
-                      //   ),
-                      // ],
+                          );
+                        },
+                        // ),
+                        // secondaryActions: <Widget>[
+                        //   IconSlideAction(
+                        //     caption: 'Delete',
+                        //     color: Theme.of(context).scaffoldBackgroundColor,
+                        //     icon: Icons.delete,
+                        //     foregroundColor: Theme.of(context).primaryColor,
+                        //     onTap: () => _deleteConversation(
+                        //       convProvider.concersations[index].id,
+                        //     ),
+                        //   ),
+                        // ],
+                      ),
                     );
                   }),
         );
