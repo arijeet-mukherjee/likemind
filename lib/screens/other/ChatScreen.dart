@@ -91,13 +91,31 @@ class _ChatScreenState extends State<ChatScreen> {
               children: <Widget>[
                 SizedBox(width: 10),
                 Expanded(
-                    child: TextField(
-                  controller: messageTextEditController,
-                  decoration: InputDecoration(
+                    child: Container(
+                      child: new ConstrainedBox(constraints: BoxConstraints(
+                        maxHeight: 300,
+                      ),
+                      child:TextField(
+                      controller: messageTextEditController,
+                      minLines: 1,
+                      maxLines: 5,
+                      decoration: InputDecoration(
                       border: InputBorder.none,
                       hintText: 'Type your message...',
                       hintStyle: TextStyle()),
-                )),
+                      ) ,
+                      ),
+                      
+                    )
+                    
+                    /* TextField(
+                      controller: messageTextEditController,
+                      decoration: InputDecoration(
+                      border: InputBorder.none,
+                      hintText: 'Type your message...',
+                      hintStyle: TextStyle()),
+                      ) */
+                ),
                 Provider.of<ConversationProvider>(context).busy
                     ? CircularProgressIndicator()
                     : InkWell(
